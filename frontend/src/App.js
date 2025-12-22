@@ -7,7 +7,16 @@ import Home from "./pages/Home";
 import StudentServices from "./pages/StudentServices";
 import JobDetails from "./pages/JobDetails";
 
+
 /* Student pages */
+
+
+import Jobs from "./pages/Jobs";
+import JobDetailsPage from "./pages/JobDetailsPage";
+import Contact from "./pages/Contact";
+// Student pages
+
+
 import Sign from "./pages/Sign";
 import Login from "./pages/Login";
 import StudentsCRUD from "./pages/StudentsCRUD";
@@ -111,6 +120,9 @@ export default function App() {
             </EmployerPrivateRoute>
           }
         />
+        <Route path="/jobs" element={<Jobs />} 
+        />
+
 
         {/* Jobs & Requests */}
         <Route path="/PostJob" element={<PostJob />} />
@@ -119,6 +131,13 @@ export default function App() {
         <Route path="/EditRequestPage/:id" element={<EditRequestPage />} />
 
         {/* Admin */}
+
+        <Route path="/jobs/:id" element={<JobDetailsPage />}
+         />    
+         <Route path="/contact" element={<Contact />} 
+         />
+        {/* Admin/CRUD Route (Optional) */}
+
         <Route path="/students-crud" element={<StudentsCRUD />} />
 
         {/* 404 */}

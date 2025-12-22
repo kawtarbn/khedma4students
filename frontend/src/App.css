@@ -2403,6 +2403,8 @@ body {
 
 .M {
   flex: 1 1 300px;
+  margin-top: 60px;
+
   background-color: #fff;
   padding: 20px;
   border-radius: 20px;
@@ -2505,6 +2507,32 @@ body {
 
 .form-box button:hover {
   background-color: #1e40af;
+}
+.login-btnn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: #AEC4FF;   /* Light blue initially */
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Disabled state */
+.login-btnn:disabled {
+    background-color: #d0d4db;   /* Light grey like your image */
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.info-msg {
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    line-height: 1.5;
 }
 
 /* Responsive */

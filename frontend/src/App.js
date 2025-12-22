@@ -1,37 +1,47 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Welcome from "./pages/Welcome";
-import StudentServices from "./pages/StudentServices";
-import Notifications from "./pages/Notifications";
-import JobDetails from  "./pages/JobDetails";
+import "./App.css";
 
+/* Public pages */
+// import Welcome from "./pages/W";
+import Home from "./pages/Home";
+import StudentServices from "./pages/StudentServices";
+import JobDetails from "./pages/JobDetails";
+
+
+/* Student pages */
+
+
+import Jobs from "./pages/Jobs";
+import JobDetailsPage from "./pages/JobDetailsPage";
+import Contact from "./pages/Contact";
 // Student pages
-import StudentsCRUD from "./pages/StudentsCRUD";
-import EditStudentProfile from "./pages/EditStudentProfile";
+
+
 import Sign from "./pages/Sign";
 import Login from "./pages/Login";
+import StudentsCRUD from "./pages/StudentsCRUD";
+import EditStudentProfile from "./pages/EditStudentProfile";
 import Stdashboard1 from "./pages/stdashboard1";
 import Stdashboard2 from "./pages/stdashboard2";
 
-// Employer pages
+/* Employer pages */
 import SignEmp from "./pages/signemp";
 import EmpLogin from "./pages/emplogin";
 import EmpDash1 from "./pages/empdash1";
 import EmpDash2 from "./pages/empdash2";
 import EditEmployerProfile from "./pages/EditEmployerProfile";
 
-import "./App.css";
+/* Job / Request pages */
+import PostJob from "./pages/PostJob";
+import PostRequest from "./pages/PostRequest";
+import Edit1 from "./pages/Edit1";
+import EditRequestPage from "./pages/EditRequestPage";
 
-// Check for studentId instead of studentToken
-const isStudentLoggedIn = () => {
-  return !!localStorage.getItem("studentId");
-};
+/* Auth checks */
+const isStudentLoggedIn = () => !!localStorage.getItem("studentId");
+const isEmployerLoggedIn = () => !!localStorage.getItem("employerId");
 
-// Check for employerId instead of employerToken
-const isEmployerLoggedIn = () => {
-  return !!localStorage.getItem("employerId");
-};
-
-// PrivateRoute wrappers
+/* Protected routes */
 const StudentPrivateRoute = ({ children }) =>
   isStudentLoggedIn() ? children : <Navigate to="/login" />;
 
@@ -52,6 +62,7 @@ export default function App() {
         {/* Student */}
         <Route path="/sign" element={<Sign />} />
         <Route path="/login" element={<Login />} />
+
         <Route
           path="/stdashboard1"
           element={
@@ -60,6 +71,7 @@ export default function App() {
             </StudentPrivateRoute>
           }
         />
+
         <Route
           path="/stdashboard2"
           element={
@@ -68,6 +80,7 @@ export default function App() {
             </StudentPrivateRoute>
           }
         />
+
         <Route
           path="/edit-student/:id"
           element={
@@ -77,9 +90,10 @@ export default function App() {
           }
         />
 
-        {/* Employer Routes */}
+        {/* Employer */}
         <Route path="/signemp" element={<SignEmp />} />
         <Route path="/emplogin" element={<EmpLogin />} />
+
         <Route
           path="/empdash1"
           element={
@@ -88,6 +102,7 @@ export default function App() {
             </EmployerPrivateRoute>
           }
         />
+
         <Route
           path="/empdash2"
           element={
@@ -96,22 +111,38 @@ export default function App() {
             </EmployerPrivateRoute>
           }
         />
+
         <Route
-          path="/EditEmployerProfile"
+          path="/edit-employer"
           element={
             <EmployerPrivateRoute>
               <EditEmployerProfile />
             </EmployerPrivateRoute>
           }
         />
+        <Route path="/jobs" element={<Jobs />} 
+        />
 
+
+        {/* Jobs & Requests */}
+        <Route path="/PostJob" element={<PostJob />} />
+        <Route path="/PostRequest" element={<PostRequest />} />
+        <Route path="/Edit1/:id" element={<Edit1 />} />
+        <Route path="/EditRequestPage/:id" element={<EditRequestPage />} />
+
+        {/* Admin */}
+
+        <Route path="/jobs/:id" element={<JobDetailsPage />}
+         />    
+         <Route path="/contact" element={<Contact />} 
+         />
         {/* Admin/CRUD Route (Optional) */}
-        <Route path="/students-crud" element={<StudentsCRUD />} />
-        <Route path="/StudentServices" element={<StudentServices/>} />
-        <Route path="/JobDetails" element={<JobDetails />}/>
 
-        {/* 404 fallback */}
+        <Route path="/students-crud" element={<StudentsCRUD />} />
+
+        {/* 404 */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
+
       </Routes>
     </Router>
   );

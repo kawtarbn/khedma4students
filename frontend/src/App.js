@@ -54,10 +54,10 @@ export default function App() {
       <Routes>
 
         {/* Public */}
-        {/* <Route path="/" element={<Welc />} /> */}
-        <Route path="/" element={<Home />} />
-        <Route path="/student-services" element={<StudentServices />} />
-        <Route path="/job/:id" element={<JobDetails />} />
+       <Route path="/" element={<Home />} /> 
+        <Route path="/Home" element={<Home />} />
+        <Route path="/StudentServices" element={<StudentServices />} />
+        <Route path="/JobDetails" element={<JobDetails />} />
 
         {/* Student */}
         <Route path="/sign" element={<Sign />} />

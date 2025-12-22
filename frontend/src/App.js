@@ -4,6 +4,10 @@ import StudentServices from "./pages/StudentServices";
 import Notifications from "./pages/Notifications";
 import JobDetails from  "./pages/JobDetails";
 
+
+import Jobs from "./pages/Jobs";
+import JobDetailsPage from "./pages/JobDetailsPage";
+import Contact from "./pages/Contact";
 // Student pages
 import StudentsCRUD from "./pages/StudentsCRUD";
 import EditStudentProfile from "./pages/EditStudentProfile";
@@ -101,7 +105,13 @@ export default function App() {
             </EmployerPrivateRoute>
           }
         />
+        <Route path="/jobs" element={<Jobs />} 
+        />
 
+        <Route path="/jobs/:id" element={<JobDetailsPage />}
+         />    
+         <Route path="/contact" element={<Contact />} 
+         />
         {/* Admin/CRUD Route (Optional) */}
         <Route path="/students-crud" element={<StudentsCRUD />} />
         <Route path="/StudentServices" element={<StudentServices/>} />

@@ -42,11 +42,14 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        {/* Home/Welcome Page */}
-        <Route path="/" element={<Welcome />} />
-        <Route path="/Welcome" element={<Welcome />} />
-        
-        {/* Student Routes */}
+
+        {/* Public */}
+       <Route path="/" element={<Home />} /> 
+        <Route path="/Home" element={<Home />} />
+        <Route path="/StudentServices" element={<StudentServices />} />
+        <Route path="/JobDetails" element={<JobDetails />} />
+
+        {/* Student */}
         <Route path="/sign" element={<Sign />} />
         <Route path="/login" element={<Login />} />
         <Route

@@ -43,7 +43,7 @@ export default function Header() {
       </div>
 
       <nav className={`nav1 ${menuOpen ? "show" : ""}`}>
-        <Link className="ak active" to="/Welcome"><b>Home</b></Link>
+        <Link className="ak active" to="/Home"><b>Home</b></Link>
         <Link className="ak hov" to="/jobs"><b>Jobs</b></Link>
         <Link className="ak hov" to="/StudentServices"><b>Student Services</b></Link>
         <Link className="ak hov" to="/rating"><b>Ratings</b></Link>

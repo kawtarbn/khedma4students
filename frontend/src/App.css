@@ -1307,6 +1307,117 @@ body {
   flex: 1;
 }
 
+.success-stories {
+  padding: 80px 8%;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.success-title {
+  font-size: 32px;
+  font-weight: 700;
+  
+  margin-bottom: 10px;
+}
+
+.success-subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 50px;
+}
+
+/* Cards layout */
+.stories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* Card */
+.story-card {
+  background: #f9fbff;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Left border colors */
+.story-card.blue {
+  border-left: 5px solid #2563eb;
+}
+
+.story-card.green {
+  border-left: 5px solid #22c55e;
+}
+
+/* Header */
+.story-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar.green {
+  background: #22c55e;
+}
+
+.story-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.story-header span {
+  font-size: 13px;
+  color: #666;
+}
+
+/* Rating */
+.rating {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #f59e0b;
+}
+
+/* Text */
+.story-text {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #22c55e;
+  border-radius: 20px;
+}
+
+
 
 
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%responsive %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ùùù */

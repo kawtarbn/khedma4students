@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('jobs', function (Blueprint $table) {
+        Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->longText('description');
@@ -14,12 +14,16 @@ return new class extends Migration {
             $table->string('city');
             $table->string('contactEmail');
             $table->string('contactPhone');
+
+            $table->string('pay')->nullable();
+            $table->string('availability')->nullable();
+
             $table->string('status')->default('Active');
             $table->timestamps();
         });
     }
 
     public function down(): void {
-        Schema::dropIfExists('jobs');
+        Schema::dropIfExists('requests');
     }
 };

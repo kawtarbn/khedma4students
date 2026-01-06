@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\RequestController;
 
 // Student routes
 Route::get('/students', [StudentController::class, 'index']);
@@ -23,3 +25,17 @@ Route::delete('/employers/{id}', [EmployerController::class, 'destroy']);
 Route::post('/employer-login', [EmployerController::class, 'login']);
 Route::get('/employers/{id}/jobs', [EmployerController::class, 'getJobs']);
 Route::get('/employers/{id}/applications', [EmployerController::class, 'getApplications']);
+
+//Job routes 
+Route::get('/jobs', [JobController::class, 'index']);
+Route::post('/jobs', [JobController::class, 'store']);
+Route::get('/jobs/{id}', [JobController::class, 'show']);
+Route::put('/jobs/{id}', [JobController::class, 'update']);
+Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
+
+//Request routes
+Route::get('/requests', [RequestController::class, 'index']);
+Route::post('/requests', [RequestController::class, 'store']);
+Route::get('/requests/{id}', [RequestController::class, 'show']);
+Route::put('/requests/{id}', [RequestController::class, 'update']);
+Route::delete('/requests/{id}', [RequestController::class, 'destroy']);

@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import JobCard from "../components/JobCards";
 import JobFilters from "../components/JobFilters";
-import { jobsData } from "../data/jobsData";
+import { getJobs, deleteJob } from "../api"; // ✅ use backend API
 
 const categories = [
   "All Categories",
@@ -34,22 +34,62 @@ export default function Jobs() {
   const [category, setCategory] = useState("All Categories");
   const [city, setCity] = useState("All Cities");
 
-  const filtered = useMemo(() => {
-    return jobsData.filter((j) => {
-      const matchesSearch =
-        !search ||
-        j.title.toLowerCase().includes(search.toLowerCase()) ||
-        j.description.toLowerCase().includes(search.toLowerCase());
+  const [jobs, setJobs] = useState([]);        // ✅ real jobs from backend
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  const refreshJobs = async () => {
+    try {
+      setError("");
+      setLoading(true);
+      const res = await getJobs();
+      setJobs(res.data || []);
+    } catch (e) {
+      console.error(e);
+      setError("Failed to load jobs. Check backend/server.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    refreshJobs();
+  }, []);
+
+  const handleDelete = async (id) => {
+    const ok = window.confirm("Delete this job?");
+    if (!ok) return;
+
+    try {
+      await deleteJob(id);
+      // minimal update: refetch from server
+      refreshJobs();
+    } catch (e) {
+      console.error(e);
+      alert("Failed to delete job.");
+    }
+  };
+
+  const filtered = useMemo(() => {
+    return jobs.filter((j) => {
+      const title = (j.title || "").toLowerCase();
+      const description = (j.description || "").toLowerCase();
+      const s = search.toLowerCase();
+
+      const matchesSearch =
+        !search || title.includes(s) || description.includes(s);
+
+      // IMPORTANT: your backend categories are like "Tutoring & education"
+      // but your friend’s filter list uses different labels.
+      // Minimal change: if category is not "All Categories", do strict match.
       const matchesCategory =
         category === "All Categories" || j.category === category;
 
-      const matchesCity =
-        city === "All Cities" || j.city === city;
+      const matchesCity = city === "All Cities" || j.city === city;
 
       return matchesSearch && matchesCategory && matchesCity;
     });
-  }, [search, category, city]);
+  }, [jobs, search, category, city]);
 
   return (
     <div>
@@ -68,9 +108,16 @@ export default function Jobs() {
           onCityChange={setCity}
         />
 
+        {loading && <p>Loading jobs...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
         <div className="job-list">
-          {filtered.map((job) => (
-            <JobCard key={job.id} job={job} />
+          {!loading && !error && filtered.map((job) => (
+            <JobCard
+              key={job.id}
+              job={job}
+              onDelete={handleDelete} // ✅ delete button handler
+            />
           ))}
         </div>
       </section>

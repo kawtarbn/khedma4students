@@ -7,9 +7,9 @@ const StartSection = () => {
       <h2>Ready to Get Started?</h2>
       <p>Join thousands of students and employers finding opportunities every day</p>
 
-      {/* <Link to="/sign" className="cta">
+      <Link to="/sign" className="cta">
         Create free account
-      </Link> */}
+      </Link>
     </section>
   );
 };

@@ -6,7 +6,7 @@
         "build": "vite build",
         "dev": "vite"
     },
-       "proxy": "http://127.0.0.1:8000",
+    "proxy": "http://127.0.0.1:8000",
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
         "@inertiajs/react": "^2.0.0",
@@ -16,8 +16,10 @@
         "autoprefixer": "^10.4.12",
         "axios": "^1.13.2",
         "concurrently": "^9.0.1",
+        "laravel-echo": "^2.3.0",
         "laravel-vite-plugin": "^2.0.0",
         "postcss": "^8.4.31",
+        "pusher-js": "^8.4.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "tailwindcss": "^3.2.1",

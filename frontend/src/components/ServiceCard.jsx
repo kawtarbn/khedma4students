@@ -29,7 +29,7 @@ export default function ServiceCard({ service }) {
       <hr />
       <div className="footer-card">
         <h4>{service.author}</h4>
-        <a href="JobDetails">
+        <a href="ServiceDetails">
           <button className="button">View Details</button>
         </a>
       </div>

@@ -6,6 +6,8 @@ import "./App.css";
 import Home from "./pages/Home";
 import StudentServices from "./pages/StudentServices";
 import JobDetails from "./pages/JobDetails";
+import ServiceDetails from "./pages/ServiceDetails";
+import Notifications from "./pages/Notifications";
 
 
 /* Student pages */
@@ -58,6 +60,8 @@ export default function App() {
         <Route path="/Home" element={<Home />} />
         <Route path="/StudentServices" element={<StudentServices />} />
         <Route path="/JobDetails" element={<JobDetails />} />
+        <Route path="/ServiceDetails" element={<ServiceDetails />} />
+        <Route path="/Notifications" element={<Notifications />} />
 
         {/* Student */}
         <Route path="/sign" element={<Sign />} />

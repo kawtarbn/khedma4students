@@ -35,8 +35,9 @@
     31 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
     32 => 'App\\Providers\\AppServiceProvider',
     33 => 'App\\Providers\\AuthServiceProvider',
-    34 => 'App\\Providers\\RouteServiceProvider',
-    35 => 'App\\Providers\\AppServiceProvider',
+    34 => 'App\\Providers\\EventServiceProvider',
+    35 => 'App\\Providers\\RouteServiceProvider',
+    36 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -59,8 +60,9 @@
     16 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
     17 => 'App\\Providers\\AppServiceProvider',
     18 => 'App\\Providers\\AuthServiceProvider',
-    19 => 'App\\Providers\\RouteServiceProvider',
-    20 => 'App\\Providers\\AppServiceProvider',
+    19 => 'App\\Providers\\EventServiceProvider',
+    20 => 'App\\Providers\\RouteServiceProvider',
+    21 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (

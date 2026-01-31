@@ -160,7 +160,8 @@ return [
      */
     App\Providers\AppServiceProvider::class,
     App\Providers\AuthServiceProvider::class,
-    App\Providers\RouteServiceProvider::class,  // <-- add this line
+    App\Providers\EventServiceProvider::class,
+    App\Providers\RouteServiceProvider::class,
 ],
 
 

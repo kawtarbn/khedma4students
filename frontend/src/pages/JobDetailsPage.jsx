@@ -31,8 +31,46 @@ export default function JobDetailsPage() {
   }, [id]);
 
   return (
+
+    <>
+      <Header  />
+
+      <div className="X">
+        {/* LEFT SIDE */}
+        <div className="S">
+          <Link to="/jobs" className="a">
+            <h3 className="h3d">← Back to listings</h3>
+          </Link>
+
+          <div className="homem2">
+            <div className="text1">
+              <h3>{job.title}</h3>
+              <h5 className="btnm">Posted by Employer</h5>
+            </div>
+
+            <div className="job-info">
+              <span className="info-item">📍 {job.city}</span>
+              <span className="info-item">📅 12/10/2025</span>
+              <span className="info-item">⭐ {job.rating}</span>
+            </div>
+
+            <h3>Job Description</h3>
+            <p>{job.description}</p>
+
+            <h3>Category</h3>
+            <h5 className="b">{job.category}</h5>
+
+            <h3>Posted By</h3>
+            <p>👤 {job.author}</p>
+          </div>
+        </div>
+
+        {/* REVIEWS */}
+        
+
     <div>
-      <Header />
+     
+
 
       <section className="container2">
         <div className="main-content">
@@ -94,6 +132,14 @@ export default function JobDetailsPage() {
             </>
           )}
         </div>
+      </div>
+         {open && (
+        <ApplyModal
+          onClose={() => setOpen(false)}
+          jobId={job.id}
+          studentId={localStorage.getItem("studentId")}
+        />
+      )}
       </section>
 
       {showModal && (

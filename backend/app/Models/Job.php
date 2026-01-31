@@ -14,6 +14,24 @@ class Job extends Model
         'description',
         'category',
         'city',
+        'employer_id',
+    ];
+
+    /**
+     * Job belongs to one employer.
+     */
+    public function employer()
+    {
+        return $this->belongsTo(Employer::class);
+    }
+
+    /**
+     * Job has many applications.
+     */
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
         'contactEmail',
         'contactPhone',
         'status'

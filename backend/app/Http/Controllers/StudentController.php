@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -107,8 +108,35 @@ class StudentController extends Controller
         return response()->json([]);
     }
 
+    /**
+     * Get applications for the given student (My Applications).
+     * Returns applications with job and employer info for display.
+     */
     public function getApplications($studentId)
     {
-        return response()->json([]);
+        $applications = Application::where('student_id', $studentId)
+            ->with(['job', 'job.employer'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Shape for frontend: title, employer_name, status, created_at, etc.
+        $data = $applications->map(function ($app) {
+            return [
+                'id'            => $app->id,
+                'student_id'    => $app->student_id,
+                'job_id'        => $app->job_id,
+                'title'         => $app->job ? $app->job->title : null,
+                'employer_name' => $app->job && $app->job->employer ? $app->job->employer->company : null,
+                'status'        => $app->status,
+                'fullname'      => $app->fullname,
+                'email'         => $app->email,
+                'phone'         => $app->phone,
+                'message'       => $app->message,
+                'created_at'    => $app->created_at,
+                'updated_at'    => $app->updated_at,
+            ];
+        });
+
+        return response()->json($data);
     }
 }

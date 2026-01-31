@@ -35,7 +35,7 @@ export default function Sign() {
   localStorage.setItem("studentId", res.data.id); 
 
   setSuccess("Account created successfully!");
-  setTimeout(() => { window.location.href = "/Welcome"; }, 1000);
+  setTimeout(() => { window.location.href = "/"; }, 1000);
 } catch (err) {
 
 

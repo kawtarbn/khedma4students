@@ -30,11 +30,18 @@ export const deleteEmployer = (id) =>
   axios.delete(`${API_URL}/employers/${id}`);
 
 // ------------------- JOBS -------------------
+export const getJobs = () => axios.get(`${API_URL}/jobs`);
+export const getJobById = (id) => axios.get(`${API_URL}/jobs/${id}`);
 export const createJob = (data) => axios.post(`${API_URL}/jobs`, data);
 export const updateJob = (id, data) => axios.put(`${API_URL}/jobs/${id}`, data);
 export const deleteJob = (id) => axios.delete(`${API_URL}/jobs/${id}`);
-export const getJobs = () => axios.get(`${API_URL}/jobs`);
 
+// ------------------- APPLICATIONS -------------------
+export const createApplication = (data) => axios.post(`${API_URL}/applications`, data);
+export const updateApplication = (id, data) => axios.put(`${API_URL}/applications/${id}`, data);
+export const deleteApplication = (id) => axios.delete(`${API_URL}/applications/${id}`);
+export const getApplications = () => axios.get(`${API_URL}/applications`);
+export const getApplicationById = (id) => axios.get(`${API_URL}/applications/${id}`);
 // ------------------- REQUESTS -------------------
 export const createRequest = (data) => axios.post(`${API_URL}/requests`, data);
 export const updateRequest = (id, data) => axios.put(`${API_URL}/requests/${id}`, data);

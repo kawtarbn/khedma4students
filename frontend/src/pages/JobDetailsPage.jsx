@@ -52,29 +52,7 @@ export default function JobDetailsPage() {
         </div>
 
         {/* REVIEWS */}
-        <div className="M">
-          <h3>Reviews</h3>
-
-          <div className="Q">
-            <h3>Fatima.Z ⭐ (5/5)</h3>
-            <p className="e">08/10/2025</p>
-          </div>
-          <p>Excellent work! Very professional and reliable.</p>
-          <hr />
-
-          <div className="Q">
-            <h3>Mohamed.K ⭐ (4/5)</h3>
-            <p className="t">05/10/2025</p>
-          </div>
-          <p>Good experience overall. Would recommend.</p>
-          <hr />
-
-          <div className="Q">
-            <h3>Lina.B ⭐ (4/5)</h3>
-            <p className="e">01/10/2025</p>
-          </div>
-          <p>Great communication and quality service.</p>
-        </div>
+        
 
         {/* CONTACT CARD */}
         <div className="card">
@@ -110,9 +88,13 @@ export default function JobDetailsPage() {
           )}
         </div>
       </div>
-
-      {open && <ApplyModal onClose={() => setOpen(false)} />}
-
+         {open && (
+        <ApplyModal
+          onClose={() => setOpen(false)}
+          jobId={job.id}
+          studentId={localStorage.getItem("studentId")}
+        />
+      )}
       <Footer />
     </>
   );

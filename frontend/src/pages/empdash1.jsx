@@ -40,6 +40,23 @@ export default function EmpDash1() {
     );
   }
 
+  if (!employer?.id) {
+    return (
+      <>
+        <Header />
+        <div className="hh22">
+          <p>Could not load your dashboard.</p>
+          <p style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>
+            Please check that the backend is running and you are logged in, then{" "}
+            <a href="/empdash1" style={{ color: "#2563eb" }}>try again</a> or{" "}
+            <a href="/emplogin" style={{ color: "#2563eb" }}>log in again</a>.
+          </p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />

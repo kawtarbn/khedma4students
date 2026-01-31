@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { createApplication } from "../api";
 
-export default function ApplyModal({ onClose }) {
+export default function ApplyModal({ onClose, jobId, studentId }) {
   const [form, setForm] = useState({
     fullname: "",
     email: "",
@@ -9,6 +10,7 @@ export default function ApplyModal({ onClose }) {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   function validate() {
     const e = {};
@@ -29,16 +31,55 @@ export default function ApplyModal({ onClose }) {
     return Object.keys(e).length === 0;
   }
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
-    if (validate()) {
+    if (!validate()) return;
+
+    if (!jobId || !studentId) {
+      alert("Missing job or student information. Please try again.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const applicationData = {
+        student_id: studentId,
+        job_id: jobId,
+        fullname: form.fullname,
+        email: form.email,
+        phone: form.phone,
+        message: form.message,
+        status: "pending",
+      };
+
+      await createApplication(applicationData);
       alert("Application submitted successfully!");
+      setForm({
+        fullname: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+      setErrors({});
       onClose();
+    } catch (err) {
+      console.error("Error submitting application:", err.response || err);
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors);
+        // Show backend validation message so user knows what went wrong
+        const msg = err.response.data.errors.job_id?.[0] || err.response.data.errors.student_id?.[0] || err.response.data.message;
+        if (msg) alert(msg);
+      } else {
+        const msg = err.response?.data?.message || (err.code === "ERR_NETWORK" ? "Cannot reach server. Is the backend running?" : "Failed to submit application. Please try again.");
+        alert(msg);
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <div className="modal" style={{ display: "flex" }}>
+    <div className="modal" style={{ display: "flex", zIndex: 10001 }}>
       <div className="modalcontent">
         <div className="form-box">
           <button className="close-btn" onClick={onClose}>
@@ -87,21 +128,24 @@ export default function ApplyModal({ onClose }) {
               <div className="error-msg">{errors.phone}</div>
             )}
 
-            <label>Cover Message</label>
+            <label htmlFor="apply-cover-message">Cover Message</label>
             <textarea
+              id="apply-cover-message"
               rows="4"
               name="message"
-              value={form.message}
+              value={form.message ?? ""}
+              placeholder="Tell the employer why you're a good fit..."
               onChange={(e) =>
                 setForm({ ...form, message: e.target.value })
               }
+              aria-label="Cover message"
             />
             {errors.message && (
               <div className="error-msg">{errors.message}</div>
             )}
 
-            <button type="submit" className="submit-btn">
-              Submit Application
+            <button type="submit" className="submit-btn" disabled={loading}>
+              {loading ? "Submitting..." : "Submit Application"}
             </button>
           </form>
         </div>

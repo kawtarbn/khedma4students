@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ServiceCard from "../components/ServiceCard";
 import ServiceFilters from "../components/ServiceFilters";
 
-
-const servicesData = [
+// Keep the original services data
+const originalServicesData = [
   {
     title: "Graphic Designer Available for Freelance Work",
     city: "Oran",
@@ -48,85 +48,52 @@ const servicesData = [
   },
 ];
 
-const categories = [
-  "Education & Tutoring",
-  "Digital & Freelance",
-  "Service & Delivery",
-  "Interships",
-  "Health & Wellness",
-  "Home & Family Help",
-  "Events & Temporary Work",
-];
-
-const cities = [
-  "All Cities",
-  "Adrar",
-  "Chlef",
-  "Laghouat",
-  "Oum El Bouaghi",
-  "Batna",
-  "Béjaïa",
-  "Biskra",
-  "Béchar",
-  "Blida",
-  "Bouira",
-  "Tamanrasset",
-  "Tébessa",
-  "Tlemcen",
-  "Tiaret",
-  "Tizi Ouzou",
-  "Alger",
-  "Djelfa",
-  "Jijel",
-  "Sétif",
-  "Saïda",
-  "Skikda",
-  "Sidi Bel Abbès",
-  "Annaba",
-  "Guelma",
-  "Constantine",
-  "Médéa",
-  "Mostaganem",
-  "MSila",
-  "Mascara",
-  "Ouargla",
-  "Oran",
-  "El Bayadh",
-  "Illizi",
-  "Bordj Bou Arreridj",
-  "Boumerdès",
-  "El Tarf",
-  "Tindouf",
-  "Tissemsilt",
-  "El Oued",
-  "Khenchela",
-  "Souk Ahras",
-  "Tipaza",
-  "Mila",
-  "Aïn Defla",
-  "Naâma",
-  "Aïn Témouchent",
-  "Ghardaïa",
-  "Relizane",
-  "Timimoun",
-  "Bordj Badji Mokhtar",
-  "Ouled Djellal",
-  "Béni Abbès",
-  "In Salah",
-  "In Guezzam",
-  "Touggourt",
-  "Djanet",
-  "El MGhair",
-  "El Meniaa",
-];
-
 export default function StudentServices() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [city, setCity] = useState("All Cities");
+  const [apiServices, setApiServices] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const filtered = useMemo(() => {
-    return servicesData.filter((s) => {
+  // Combine original data with API data
+  const allServices = [...originalServicesData, ...apiServices];
+
+  // Fetch services from API
+  useEffect(() => {
+    fetchServices();
+  }, [search, category, city]);
+
+  const fetchServices = async () => {
+    try {
+      setLoading(true);
+      setError("");
+      
+      // Build query parameters
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (category !== "All Categories") params.append('category', category);
+      if (city !== "All Cities") params.append('city', city);
+      
+      const response = await fetch(`http://127.0.0.1:8000/api/student-services?${params}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch services');
+      }
+      
+      const data = await response.json();
+      setApiServices(data.data || []);
+    } catch (err) {
+      setError(err.message);
+      console.error('Error fetching services:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter all services (original + API)
+  const filteredServices = useMemo(() => {
+    return allServices.filter((s) => {
       const matchesSearch =
         !search ||
         s.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -136,7 +103,25 @@ export default function StudentServices() {
       const matchesCity = city === "All Cities" || s.city === city;
       return matchesSearch && matchesCategory && matchesCity;
     });
-  }, [search, category, city]);
+  }, [search, category, city, allServices]);
+
+  const categories = [
+    "All Categories",
+    "Freelance & Digital Work",
+    "Tutoring & Education",
+    "Service & Delivery",
+    "Health & Wellness",
+    "Home & Family Help",
+    "Events & Temporary Work",
+  ];
+
+  const cities = [
+    "All Cities",
+    "Alger", "Oran", "Constantine", "Annaba", "Blida", "Batna",
+    "Sétif", "Tlemcen", "Béjaïa", "Mostaganem", "Bordj Bou Arreridj",
+    "Boumerdès", "El Oued", "Skikda", "Jijel", "Biskra", "Béchar",
+    "Tébessa", "Tiaret", "Médéa", "Tizi Ouzou", "Mila", "Aïn Defla",
+  ];
 
   return (
     <div>
@@ -151,7 +136,7 @@ export default function StudentServices() {
         <ServiceFilters
           categories={categories}
           cities={cities}
-          total={filtered.length}
+          total={filteredServices.length}
           onSearchChange={setSearch}
           onCategoryChange={setCategory}
           onCityChange={setCity}
@@ -159,11 +144,53 @@ export default function StudentServices() {
 
         <br />
 
+        {/* Loading State */}
+        {loading && (
+          <div style={{ textAlign: 'center', padding: '20px' }}>
+            <div style={{ fontSize: '16px', color: '#666' }}>Loading more services...</div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div style={{ textAlign: 'center', padding: '20px' }}>
+            <div style={{ fontSize: '16px', color: '#ff4444' }}>Error loading additional services: {error}</div>
+          </div>
+        )}
+
+        {/* Services List - Original + API */}
         <div className="cards">
-          {filtered.map((service) => (
-            <ServiceCard key={service.title} service={service} />
+          {filteredServices.map((service, index) => (
+            <ServiceCard key={`${service.title || service.id}-${index}`} service={service} />
           ))}
         </div>
+
+        {/* No Results */}
+        {!loading && !error && filteredServices.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            <div style={{ fontSize: '18px', color: '#666' }}>
+              No services found matching your criteria.
+            </div>
+            <button 
+              onClick={() => {
+                setSearch("");
+                setCategory("All Categories");
+                setCity("All Cities");
+              }}
+              style={{
+                marginTop: '10px',
+                padding: '10px 20px',
+                backgroundColor: '#28a745',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer'
+              }}
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
       </section>
 
       <Footer />

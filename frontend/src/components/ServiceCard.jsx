@@ -19,7 +19,7 @@ export default function ServiceCard({ service }) {
         </div>
         <div className="Ratingn">
           <img src="media/starn.png" alt="rating" />
-          <h4>{service.rating}</h4>
+          <h4>{service.rating || "Not rated"}</h4>
         </div>
       </div>
 
@@ -29,11 +29,10 @@ export default function ServiceCard({ service }) {
       <hr />
       <div className="footer-card">
         <h4>{service.author}</h4>
-        <a href="JobDetails">
+        <a href={`/JobDetails/${service.id}`}>
           <button className="button">View Details</button>
         </a>
       </div>
     </div>
   );
 }
-

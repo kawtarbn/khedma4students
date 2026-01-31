@@ -37,4 +37,6 @@ class RequestController extends Controller
         RequestModel::findOrFail($id)->delete();
         return response()->json(['message' => 'Request deleted']);
     }
+
+    
 }

@@ -1,58 +1,13 @@
-import React, { useMemo, useState } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import React, { useState, useMemo, useEffect } from "react";
+import { getRequests } from "../api"; // API call to get all requests
 import ServiceCard from "../components/ServiceCard";
-import ServiceFilters from "../components/ServiceFilters";
-
-
-const servicesData = [
-  {
-    title: "Graphic Designer Available for Freelance Work",
-    city: "Oran",
-    rating: "4.8 (8)",
-    description:
-      "Computer Science student offering graphic design services. Experienced in logos, posters, social media content. Available evenings and weekends.",
-    category: "Freelance & Digital Work",
-    availability: "Mon-Fri: 6PM-10PM, Weekends: All day",
-    author: "Amina Kaci",
-  },
-  {
-    title: "Web Developer Available - React & Node.js",
-    city: "Annaba",
-    rating: "5 (15)",
-    description:
-      "Engineering student specializing in web development. Can build websites, web apps, and provide maintenance.",
-    category: "Freelance & Digital Work",
-    availability: "Flexible schedule, remote preferred",
-    author: "Youcef Meziane",
-  },
-  {
-    title: "English Lessons Available - All Levels",
-    city: "Tlemcen",
-    rating: "4.9 (20)",
-    description:
-      "Bilingual student offering English lessons for all levels. IELTS prep available.",
-    category: "Tutoring & Education",
-    availability: "Tue/Thu/Sat 2PM-6PM",
-    author: "Sarah Hadj",
-  },
-  {
-    title: "Translation Services - French/Arabic/English",
-    city: "Algiers",
-    rating: "4.6 (11)",
-    description:
-      "Languages student offering professional translation services. Quick delivery.",
-    category: "Freelance & Digital Work",
-    availability: "Available every day",
-    author: "Karim Belkacem",
-  },
-];
+import ServiceFilters from "../components/ServiceFilters"; // Filters component
 
 const categories = [
   "Education & Tutoring",
   "Digital & Freelance",
   "Service & Delivery",
-  "Interships",
+  "Internships",
   "Health & Wellness",
   "Home & Family Help",
   "Events & Temporary Work",
@@ -121,12 +76,29 @@ const cities = [
 ];
 
 export default function StudentServices() {
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [city, setCity] = useState("All Cities");
 
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const res = await getRequests(); // Fetch all requests from backend
+        setRequests(res.data); // Set the requests data
+      } catch (err) {
+        console.error("Error fetching requests:", err);
+        setRequests([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRequests();
+  }, []);
+
   const filtered = useMemo(() => {
-    return servicesData.filter((s) => {
+    return requests.filter((s) => {
       const matchesSearch =
         !search ||
         s.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -136,38 +108,26 @@ export default function StudentServices() {
       const matchesCity = city === "All Cities" || s.city === city;
       return matchesSearch && matchesCategory && matchesCity;
     });
-  }, [search, category, city]);
+  }, [search, category, city, requests]);
+
+  if (loading) return <p>Loading requests...</p>;
+  if (requests.length === 0) return <p>No requests found.</p>;
 
   return (
     <div>
-      <Header variant="guest" />
-      <Header variant="student" />
-      <Header variant="employer" />
-
-      <section className="studentServices">
-        <h2>Student Services</h2>
-        <p>Browse services offered by talented students</p>
-
-        <ServiceFilters
-          categories={categories}
-          cities={cities}
-          total={filtered.length}
-          onSearchChange={setSearch}
-          onCategoryChange={setCategory}
-          onCityChange={setCity}
-        />
-
-        <br />
-
-        <div className="cards">
-          {filtered.map((service) => (
-            <ServiceCard key={service.title} service={service} />
-          ))}
-        </div>
-      </section>
-
-      <Footer />
+      <ServiceFilters
+        categories={categories}
+        cities={cities}
+        total={filtered.length}
+        onSearchChange={setSearch}    // Ensure search change is passed to parent
+        onCategoryChange={setCategory} // Ensure category change is passed to parent
+        onCityChange={setCity}        // Ensure city change is passed to parent
+      />
+      <div className="cards">
+        {filtered.map((service) => (
+          <ServiceCard key={service.id} service={service} />
+        ))}
+      </div>
     </div>
   );
 }
-

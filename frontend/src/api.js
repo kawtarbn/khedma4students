@@ -34,10 +34,12 @@ export const createJob = (data) => axios.post(`${API_URL}/jobs`, data);
 export const updateJob = (id, data) => axios.put(`${API_URL}/jobs/${id}`, data);
 export const deleteJob = (id) => axios.delete(`${API_URL}/jobs/${id}`);
 export const getJobs = () => axios.get(`${API_URL}/jobs`);
-export const getJobById = (id) => axios.get(`${API_URL}/jobs/${id}`); // ✅ added
+export const getJobById = (id) => axios.get(`${API_URL}/jobs/${id}`); 
+
 
 // ------------------- REQUESTS -------------------
 export const createRequest = (data) => axios.post(`${API_URL}/requests`, data);
 export const updateRequest = (id, data) => axios.put(`${API_URL}/requests/${id}`, data);
 export const deleteRequest = (id) => axios.delete(`${API_URL}/requests/${id}`);
 export const getRequests = () => axios.get(`${API_URL}/requests`);
+export const getRequestById = (id) => axios.get(`${API_URL}/requests/${id}`);

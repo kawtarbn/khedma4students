@@ -57,7 +57,9 @@ export default function App() {
        <Route path="/" element={<Home />} /> 
         <Route path="/Home" element={<Home />} />
         <Route path="/StudentServices" element={<StudentServices />} />
-        <Route path="/JobDetails" element={<JobDetails />} />
+        {/* <Route path="/JobDetails" element={<JobDetails />} /> */}
+        <Route path="/JobDetails/:id" element={<JobDetails />} />  {/* Dynamic JobDetails route */}
+
 
         {/* Student */}
         <Route path="/sign" element={<Sign />} />

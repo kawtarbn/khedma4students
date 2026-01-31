@@ -6,6 +6,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RequestController;
 
 // Student routes
 Route::get('/students', [StudentController::class, 'index']);
@@ -27,9 +28,9 @@ Route::post('/employer-login', [EmployerController::class, 'login']);
 Route::get('/employers/{id}/jobs', [EmployerController::class, 'getJobs']);
 Route::get('/employers/{id}/applications', [EmployerController::class, 'getApplications']);
 
+
 // Jobs (filtering only; CRUD is teammate's responsibility)
-Route::get('/jobs', [JobController::class, 'index']);
-Route::get('/jobs/{id}', [JobController::class, 'show']);
+
 
 // Applications (apply to job + student's my applications)
 Route::post('/applications', [ApplicationController::class, 'store']);
@@ -38,3 +39,18 @@ Route::delete('/applications/{id}', [ApplicationController::class, 'destroy']);
 
 // Contact Us
 Route::post('/contact', [ContactController::class, 'store']);
+
+//Job routes 
+Route::get('/jobs', [JobController::class, 'index']);
+Route::post('/jobs', [JobController::class, 'store']);
+Route::get('/jobs/{id}', [JobController::class, 'show']);
+Route::put('/jobs/{id}', [JobController::class, 'update']);
+Route::delete('/jobs/{id}', [JobController::class, 'destroy']);
+
+//Request routes
+Route::get('/requests', [RequestController::class, 'index']);
+Route::post('/requests', [RequestController::class, 'store']);
+Route::get('/requests/{id}', [RequestController::class, 'show']);
+Route::put('/requests/{id}', [RequestController::class, 'update']);
+Route::delete('/requests/{id}', [RequestController::class, 'destroy']);
+

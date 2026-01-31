@@ -17,8 +17,8 @@ const Home = () => {
       <Header />
       <HeroSection />
       <CategoriesSection />
-       <JobList />
-       <RequestsList />
+       {/* <JobList />
+       <RequestsList /> */}
       <WhyUsSection />
       <SuccessStories />
       <StartSection />
